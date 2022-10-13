@@ -8,12 +8,14 @@ pipeline {
     timeout(time: 2, unit: 'MINUTES')
   }
 
-  stages {
-    stage('Install dependencies') {
-      steps {
-        sh 'cd jenkins-tests && npm i'
-      }
-    }
+   stages {
+        stage('Build') {
+            steps {
+                nodejs(nodeJSInstallationName: 'Node 6.x', configId: '<config-file-provider-id>') {
+                    sh 'npm config ls'
+                }
+            }
+        }
     stage('Run tests') {
       steps {
         sh 'cd jenkins-tests && npm t'
